@@ -1,0 +1,21 @@
+private void updateValues() {
+        double distTraveledLastTickX = mc.thePlayer.posX - mc.thePlayer.prevPosX;
+        double distTraveledLastTickZ = mc.thePlayer.field_70161_v - mc.thePlayer.field_70166_s;
+        this.currentSpeed = (double)MathHelper.func_76133_a(distTraveledLastTickX * distTraveledLastTickX + distTraveledLastTickZ * distTraveledLastTickZ);
+        if ((this.showingLastJumpInfo() || didJumpThisTick) && (!mc.thePlayer.field_70122_E || isJumping)) {
+            if (didJumpThisTick && !this.didJumpLastTick) {
+                this.wasFirstJump = this.lastJumpSpeed == 0.0;
+                this.percentJumpSpeedChanged = this.currentSpeed != 0.0 ? this.currentSpeed / this.lastJumpSpeed - 1.0 : -1.0;
+                this.jumpSpeedChanged = this.currentSpeed - this.lastJumpSpeed;
+                this.jumpInfoStartTime = Minecraft.func_71386_F();
+                this.lastJumpSpeed = this.currentSpeed;
+                this.firstJumpSpeed = this.wasFirstJump ? this.lastJumpSpeed : 0.0;
+            }
+
+            this.didJumpLastTick = didJumpThisTick;
+        } else {
+            this.didJumpLastTick = false;
+            this.lastJumpSpeed = 0.0;
+        }
+
+    }

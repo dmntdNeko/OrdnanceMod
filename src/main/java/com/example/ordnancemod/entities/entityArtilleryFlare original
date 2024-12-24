@@ -1,0 +1,102 @@
+private int ticksExisted;
+
+    public World world;
+    public WorldServer worldServer;
+    private Entity exploder;
+
+    private double motX;
+    private double motY;
+    private double motZ;
+
+    private float velocity;
+    private float inaccuracy;
+
+    public entityArtilleryFlare(World world, EntityPlayer player, float velocity, float inaccuracy) {
+        super(world, player, velocity);
+        this.world = world;
+        this.worldServer = (WorldServer) world;
+        this.velocity = velocity;
+        this.inaccuracy = inaccuracy;
+        this.motX = this.motionX;
+        this.motY = this.motionY;
+        this.motZ = this.motionZ;
+        this.setThrowableHeading(this.motionX,this.motionY,this.motionZ,0,1.0F);
+    }
+
+
+
+    @SideOnly(Side.CLIENT)
+    public void onUpdate() {
+
+        ++ticksExisted;
+
+        if (!world.isRemote) {
+            if (ticksExisted % 20 == 0 && ticksExisted <= 100) {
+                //this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "note.harp", 10.0f, 2.0f);
+            }
+            if (ticksExisted % 4 == 0) {
+                worldServer.func_147487_a("smoke", this.posX, this.posY, this.posZ, 10, 0.0D, 0.0D, 0.0D, 0.05D);
+            }
+
+            switch (this.ticksExisted) {
+                /*case 100:
+                    this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 10.0f, false);
+                    this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "examplemod:artillery_hit", 10000.0f, 10.0f);
+                    break;*/
+                case 1:
+                    this.setThrowableHeading(this.motX,this.motY,this.motZ,this.velocity,this.inaccuracy);
+                    break;
+                case 200:
+                    this.setDead();
+                    break;
+                /*case 102:
+                    for (int i = 1; i < 6; i++) {
+                        this.worldObj.createExplosion(this, this.posX + (5 * Math.cos(60 * i)), this.posY, this.posZ + (5 * Math.sin(60 * i)), 3, false);
+                    }
+                    break;
+                case 104:
+                    for (int i = 1; i < 8; i++) {
+                        this.worldObj.createExplosion(this, this.posX + (10 * Math.cos(45 * i)), this.posY, this.posZ + (10 * Math.sin(45 * i)), 2, false);
+                    }
+                    this.setDead();
+                    break;*/
+                default:
+                    this.setThrowableHeading(this.motionX,this.motionY,this.motionZ,this.velocity,this.inaccuracy);
+                    break;
+            }
+            /*if (this.isDead) {
+                this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 10.0f, false);
+                //this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "examplemod:artillery_hit", 100.0f, (float) (0.5+Math.random()));
+                this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "examplemod:artillery_hit", 12.5f, 0.5f);
+                this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "examplemod:artillery_hit", 5.0f, 1.0f);
+                this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "examplemod:artillery_hit", 2.5f, 1.5f);
+            }*/
+
+            /*
+            if (this.isDead) {
+                customExplosion qEx = new customExplosion(world, this, this.posX, this.posY, this.posZ, 10.0f,true);
+                qEx.newCustomExplosion(false);
+
+                float soundPitch = (float) (0.33+(Math.random()*(0.5-0.33)));
+                this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "examplemod:artillery_hit", 10.0f, soundPitch);
+                //this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "examplemod:artillery_hit", 12.5f, 0.5f);
+                this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "examplemod:artillery_hit", 5.0f, soundPitch);
+                this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "examplemod:artillery_hit", 2.5f, soundPitch);
+
+
+            }
+            */
+        }
+        super.onUpdate();
+
+        }
+
+
+    }
+
+    if (this.getTicksInGround() == 2) {
+                this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "examplemod:artillery_hit", 12.5f, 0.5f);
+                this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "examplemod:artillery_hit", 5.0f, 1.0f);
+                this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "examplemod:artillery_hit", 2.5f, 1.5f);
+                setDead();
+            }

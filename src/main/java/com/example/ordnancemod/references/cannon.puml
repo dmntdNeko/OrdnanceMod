@@ -1,0 +1,13 @@
+@startuml
+
+entityCannon-->attackEntityFrom
+entityCannon-->onUpdate
+entityCannon-->fireCannon
+
+attackEntityFrom-->[player]"Drop cannon item"
+
+onUpdate-->[entity riding]"Facing of Rider"
+
+fireCannon-->[if loaded]"Fire cannonball"
+
+@enduml

@@ -1,0 +1,15 @@
+SoundManager mng = ReflectionHelper.getPrivateValue(SoundHandler.class,
+                Minecraft.getMinecraft().getSoundHandler(), "sndManager");
+        Map playingSounds = ReflectionHelper.getPrivateValue(SoundManager.class,
+                mng, "playingSounds");
+        Iterator it = playingSounds.keySet().iterator();
+        while(it.hasNext())
+        {
+            PositionedSound ps = (PositionedSound)playingSounds.get(it.next());
+            ResourceLocation reloc = ReflectionHelper.getPrivateValue(PositionedSound.class,
+                    ps, "field_147664_a");
+            if("random.explode".equals(reloc.getResourcePath()))
+            {
+                Minecraft.getMinecraft().getSoundHandler().stopSound(ps);
+                break;
+            }

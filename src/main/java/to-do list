@@ -1,0 +1,13 @@
+* Refactor [EntityExplodeFXLongLife] to [EntityExplodeFXCustom]
+* [EntityExplodeFXCustom] to encompass [EntityExplodeFXShortLife]
+* Remove [EntityExplodeFXShortLife]
+
+* Refactor [tileLightArtillery] to [tileOrdnance]
+* Make child class [tileLightArtillery], [tileHeavyArtillery], [tileMLRS] from parent [tileOrdnance]
+
+* Clean up [entityProjectile], add empty method [onHit], [onLand]
+* New child classes from [entityProjectile] overwrite [onHit] with desired effects on hit and/or on landing
+
+* Clean up [SmallArm]
+* Implement two different setters for set TSD and variable TSD
+* Implement stat calculation methods and allot values to variables in [SmallArm]

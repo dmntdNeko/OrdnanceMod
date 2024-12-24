@@ -1,0 +1,16 @@
+[
+{
+  "modid": "ordnancemod",
+  "name": "Ordnance Mod",
+  "description": "Adds ordnance in the game, heavy or otherwise",
+  "version": "1.0",
+  "mcversion": "1.7.10",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Artepo"],
+  "credits": "Forge Modding Team",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

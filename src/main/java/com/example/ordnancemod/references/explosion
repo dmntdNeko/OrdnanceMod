@@ -1,0 +1,15 @@
+public Explosion createExplosion(Entity entity, double posX, double posY, double posZ, float strength, boolean destructive)
+    {
+        return this.newExplosion(entity, posX, posY, posZ, strength, false, destructive);
+    }
+
+public Explosion newExplosion(Entity entity, double posX, double posY, double posZ, float strength, boolean flaming, boolean smoking)
+    {
+        Explosion explosion = new Explosion(this, posX, posY, posZ, strength);
+        explosion.isFlaming = flaming;
+        explosion.isSmoking = smoking;
+        if (net.minecraftforge.event.ForgeEventFactory.onExplosionStart(this, explosion)) return explosion;
+        explosion.doExplosionA();
+        explosion.doExplosionB(true);
+        return explosion;
+    }

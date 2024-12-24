@@ -1,0 +1,33 @@
+item.ItemAFC.name=Artillery Fire Controller
+item.ItemAssaultRifle.name=Assault Rifle
+item.ItemAutocannon.name=Autocannon
+item.ItemBattleRifle.name=Battle Rifle
+item.ItemHeavyArtillery.name=Heavy Artillery
+item.ItemLahti.name=Lahti
+item.ItemLMG.name=Light Machine Gun
+item.ItemPistol.name=Pistol
+item.ItemSMG.name=Sub Machine Gun
+item.ItemSniperRifle.name=Sniper Rifle
+
+item.ItemBullet.name=Bullet
+item.ItemModelSpawner.name=3D Printer
+item.ItemSpeedometer.name=Speedometer
+item.ItemTestGun.name=Test Gun
+item.ItemTileTester.name=Tile Tester
+
+itemScrap.iron.name=Scrap Iron
+itemScrap.gold.name=Scrap Gold
+itemScrap.copper.name=Scrap Copper
+
+tile.BlockGrinder.name=Grinder
+tile.BlockOrdnance.name=Ordnance
+tile.BlockWeaponPlatform.name=Weapon Platform
+tile.BlockCompactScrap.name=Compact Scrap
+tile.BlockLoosenedScrap.name=Loosened Scrap
+tile.BlockGriefingTable.name=Griefing Table
+
+itemGroup.TabExampleMod=Ordnance Mod
+
+entity.examplemod.EntityOrdnanceProjectile.name=Ordnance Projectile
+entity.examplemod.EntityFlakProjectile.name=Flak Projectile
+entity.examplemod.EntityExplodeShort.name=Explode Particle (short)

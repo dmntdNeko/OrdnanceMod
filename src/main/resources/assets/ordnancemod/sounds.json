@@ -1,0 +1,36 @@
+{
+	"bell": {"category": "master", "sounds": [{"name": "bell", "stream": false}]},
+	"artillery_fire": {"category": "master", "sounds": [{"name": "artillery_fire", "stream": false}]},
+	"artillery_fire_near": {"category": "master", "sounds": [{"name": "artillery_fire_near", "stream": false}]},
+	"artillery_fire_mid": {"category": "master", "sounds": [{"name": "artillery_fire_mid", "stream": false}]},
+	"artillery_fire_far": {"category": "master", "sounds": [{"name": "artillery_fire_far", "stream": false}]},
+	"artillery_hit": {"category": "master", "sounds": [{"name": "artillery_hit", "stream": false}]},
+	"artillery_hit_smoke": {"category": "master", "sounds": [{"name": "artillery_hit_smoke", "stream": false}]},
+
+	"mlrs_fire": {"category": "master", "sounds": [{"name": "mlrs_fire", "stream": false}]},
+	"mlrs_whizz": {"category": "master", "sounds": [{"name": "mlrs_whizz", "stream": false}]},
+
+	"HMGShotNear": {"category": "master", "sounds": [{"name": "HMGShotNear", "stream": false}]},
+	"HMGShotMid": {"category": "master", "sounds": [{"name": "HMGShotMid", "stream": false}]},
+	"HMGShotFar": {"category": "master", "sounds": [{"name": "HMGShotFar", "stream": false}]},
+	"HMGImpact": {"category": "master", "sounds": [{"name": "HMGImpact", "stream": false}]},
+
+	"pistolShot": {"category": "master", "sounds": [{"name": "pistolShot", "stream": false}]},
+
+	"intermediateShot": {"category": "master", "sounds": [{"name": "intermediateShot", "stream": false}]},
+
+	"fullPowerShot": {"category": "master", "sounds": [{"name": "fullPowerShot", "stream": false}]},
+
+	"autocannon": {"category": "master", "sounds": [{"name": "autocannon", "stream": false}]},
+
+	"impactMetalNear": {"category": "master", "sounds": [{"name": "impactMetalNear", "stream": false}]},
+	"impactMetalFar": {"category": "master", "sounds": [{"name": "impactMetalFar", "stream": false}]},
+
+	"takeshi": {"category": "master", "sounds": [{"name": "takeshi", "stream": false}]},
+	"takeshi1": {"category": "master", "sounds": [{"name": "takeshi/takeshi1", "stream": false}]},
+	"takeshi2": {"category": "master", "sounds": [{"name": "takeshi/takeshi2", "stream": false}]},
+	"takeshi3": {"category": "master", "sounds": [{"name": "takeshi/takeshi3", "stream": false}]},
+	"takeshi4": {"category": "master", "sounds": [{"name": "takeshi/takeshi4", "stream": false}]},
+	"takeshi5": {"category": "master", "sounds": [{"name": "takeshi/takeshi5", "stream": false}]},
+	"takeshi6": {"category": "master", "sounds": [{"name": "takeshi/takeshi6", "stream": false}]}
+}

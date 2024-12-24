@@ -1,0 +1,201 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+package exnihilo.blocks.tileentities;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import exnihilo.network.VanillaPacket;
+import exnihilo.particles.ParticleSieve;
+import exnihilo.registries.SieveRegistry;
+import exnihilo.registries.helpers.SiftingResult;
+import java.util.ArrayList;
+import java.util.Iterator;
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIcon;
+
+public class TileEntitySieve extends TileEntity {
+    private static final float MIN_RENDER_CAPACITY = 0.7F;
+    private static final float MAX_RENDER_CAPACITY = 0.9F;
+    private static final float PROCESSING_INTERVAL = 0.075F;
+    private static final int UPDATE_INTERVAL = 20;
+    public Block content;
+    public int contentMeta = 0;
+    private float volume = 0.0F;
+    public SieveMode mode;
+    private int timer;
+    private boolean update;
+    private boolean particleMode;
+    private int timesClicked;
+
+    public TileEntitySieve() {
+        this.mode = TileEntitySieve.SieveMode.EMPTY;
+        this.timer = 0;
+        this.update = false;
+        this.particleMode = false;
+        this.timesClicked = 0;
+        this.mode = TileEntitySieve.SieveMode.EMPTY;
+    }
+
+    public void addSievable(Block block, int blockMeta) {
+        this.content = block;
+        this.contentMeta = blockMeta;
+        this.mode = TileEntitySieve.SieveMode.FILLED;
+        this.volume = 1.0F;
+        VanillaPacket.sendTileEntityUpdate(this);
+    }
+
+    public void updateEntity() {
+        if (this.worldObj.isRemote && this.particleMode) {
+            this.spawnFX(this.content, this.contentMeta);
+        }
+
+        ++this.timer;
+        if (this.timer >= 20) {
+            this.timesClicked = 0;
+            this.timer = 0;
+            this.disableParticles();
+            if (this.update) {
+                this.update();
+            }
+        }
+
+    }
+
+    public void ProcessContents(boolean creative) {
+        if (creative) {
+            this.volume = 0.0F;
+        } else {
+            ++this.timesClicked;
+            if (this.timesClicked <= 6) {
+                this.volume -= 0.075F;
+            }
+        }
+
+        if (this.volume <= 0.0F) {
+            this.mode = TileEntitySieve.SieveMode.EMPTY;
+            if (!this.worldObj.isRemote) {
+                ArrayList<SiftingResult> rewards = SieveRegistry.getSiftingOutput(this.content, this.contentMeta);
+                if (rewards != null && rewards.size() > 0) {
+                    Iterator<SiftingResult> it = rewards.iterator();
+
+                    while(it.hasNext()) {
+                        SiftingResult reward = (SiftingResult)it.next();
+                        if (this.worldObj.rand.nextInt(reward.rarity) == 0) {
+                            EntityItem entityitem = new EntityItem(this.worldObj, (double)this.xCoord + 0.5, (double)this.yCoord + 1.5, (double)this.zCoord + 0.5, new ItemStack(reward.item, 1, reward.meta));
+                            double f3 = 0.05000000074505806;
+                            entityitem.motionX = this.worldObj.rand.nextGaussian() * f3;
+                            entityitem.motionY = 0.2;
+                            entityitem.motionZ = this.worldObj.ran.nextGaussian() * f3;
+                            this.worldObj.spawnEntity(entityitem);
+                        }
+                    }
+                }
+            }
+        } else {
+            this.particleMode = true;
+        }
+
+        this.update = true;
+    }
+
+    @SideOnly(Side.CLIENT)
+    private void spawnFX(Block block, int blockMeta) {
+        if (block != null) {
+            IIcon icon = block.getIcon(0, blockMeta);
+
+            for(int x = 0; x < 4; ++x) {
+                ParticleSieve dust = new ParticleSieve(this.worldObj, (double)this.xCoord + 0.8 * (double)this.worldObj.rand.nextFloat() + 0.15, (double)this.yCoord + 0.69, (double)this.zCoord + 0.8 * (double)this.worldObj.rand.nextFloat() + 0.15, 0.0, 0.0, 0.0, icon);
+                Minecraft.getMinecraft().effectRenderer.addEffect(dust);
+            }
+        }
+
+    }
+
+    public float getVolume() {
+        return this.volume;
+    }
+
+    public float getAdjustedVolume() {
+        float capacity = 0.19999999F;
+        float adjusted = this.volume * capacity;
+        adjusted += 0.7F;
+        return adjusted;
+    }
+
+    private void update() {
+        this.update = false;
+        VanillaPacket.sendTileEntityUpdate(this);
+    }
+
+    private void disableParticles() {
+        this.particleMode = false;
+    }
+
+    public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
+        switch (compound.getInteger("mode")) {
+            case 0:
+                this.mode = TileEntitySieve.SieveMode.EMPTY;
+                break;
+            case 1:
+                this.mode = TileEntitySieve.SieveMode.FILLED;
+        }
+
+        if (!compound.getString("content").equals("")) {
+            this.content = (Block)Block.blockRegistry.getObject(compound.getString("content"));
+        } else {
+            this.content = null;
+        }
+
+        this.contentMeta = compound.getInteger("contentMeta");
+        this.volume = compound.getFloat("volume");
+        this.particleMode = compound.getBoolean("particles");
+    }
+
+    public void writeToNBT(NBTTagCompound compound) {
+        super.writeToNBT(compound);
+        compound.setInteger("mode", this.mode.value);
+        if (this.content == null) {
+            compound.setString("content", "");
+        } else {
+            compound.setString("content", Block.field_149771_c.func_148750_c(this.content));
+        }
+
+        compound.getInteger("contentMeta", this.contentMeta);
+        compound.getFloat("volume", this.volume);
+        compound.getBoolean("particles", this.particleMode);
+    }
+
+    public Packet getDescriptionPacket() {
+        NBTTagCompound tag = new NBTTagCompound();
+        this.writeToNBT(tag);
+        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, this.blockMetaData, tag);
+    }
+
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+        NBTTagCompound tag = pkt.func_148857_g();
+        this.func_145839_a(tag);
+    }
+
+    public static enum SieveMode {
+        EMPTY(0),
+        FILLED(1);
+
+        public int value;
+
+        private SieveMode(int v) {
+            this.value = v;
+        }
+    }
+}
